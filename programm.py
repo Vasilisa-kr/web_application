@@ -19,7 +19,7 @@ def load_user(user_id):
 
 
 @app.route('/')
-def index():
+def main():
     db_sess = db_session.create_session()
     item = db_sess.query(Posts).all()
     return render_template("main.html", item=item)
@@ -59,7 +59,7 @@ def authorization():
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
             return redirect("/")
-        return render_template('login.html',
+        return render_template('authorization.html',
                                message="Неправильный логин или пароль",
                                form=form)
     return render_template('authorization.html', form=form)
@@ -70,6 +70,12 @@ def authorization():
 def logout():
     logout_user()
     return redirect("/")
+
+
+@app.route('/profile')
+def profile():
+    if current_user.is_authenticated:
+        return render_template("profile.html")
 
 
 def main():
