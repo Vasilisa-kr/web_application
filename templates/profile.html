@@ -2,21 +2,57 @@
 
 {% block content %}
   <div class="container">
-    <div class="row justify-content-center mt-5">
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header">
+      <div class="row">
+        <div class="col-lg-9 mb-3">
+           <div class="card row-hover pos-relative py-3 px-3 mb-3 border-warning border-top-0 border-right-0 border-bottom-0 rounded-0">
+            
+              <div class="col-md-8 mb-3 mb-sm-0">
             <h1 class="text-center">Привет, {{ current_user.name }}</h1>
-          </div>
+          </div><br/>
           <div class="card-body">
             <div class="d-flex justify-content-center mb-4">
               <img src="{{ url_for('static', filename='img/prof.png') }}" class="rounded-circle profile-photo" alt="Profile photo" width="200">
-            </div>
+            </div><br/>
             <p>Ваши данные:</p>
-            <p>Email: {{ current_user.email }}</p>
-          </div>
+            <p>Имя: {{ current_user.name }}</p><br/>
+            <p>Email: {{ current_user.email }}</p><br/>
+            <p>Немного о себе: {{ current_user.about }}</p><br/>
+            <p>Количество ответов: {{ answers }}</p><br/>
+            
+            
+
         </div>
-      </div>
-    </div>
   </div>
+       </div>
+        </div>
+  </div>
+<h1>Ваши вопросы:</h1><br/>
+{% for item in current_user.questions%}
+<div class="container">
+      <div class="row">
+        <div class="col-lg-9 mb-3">
+           <div class="card row-hover pos-relative py-3 px-3 mb-3 border-warning border-top-0 border-right-0 border-bottom-0 rounded-0">
+            <div class="row align-items-center">
+              <div class="col-md-8 mb-3 mb-sm-0">
+    <h2>{{item.title}}</h2>
+    <div>
+        {{item.content}}
+    </div>
+    <a href="/add_answer/{{ item.id }}" class="btn btn-lg btn-block btn-success rounded-0 py-4 mb-3 bg-op-6 roboto-bold">
+            Ответить</a>
+    <a href="/solutions/{{item.id}}" class="btn btn-lg btn-block btn-success rounded-0 py-4 mb-3 bg-op-6 roboto-bold">Посмотреть ответы</a>
+
+    <div>
+        <a href="/questions/{{ item.id }}" class="btn btn-lg btn-block btn-success rounded-0 py-4 mb-3 bg-op-6 roboto-bold">
+            Изменить
+        </a>
+    </div>
+</div>
+ </div>
+        </div>
+  </div>
+       </div>
+        </div>
+  </div>
+{% endfor %}
 {% endblock %}
