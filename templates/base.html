@@ -15,7 +15,7 @@
 <body>
 <header>
     <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="/"><img src="{{ url_for('static', filename='img/home.png') }}" alt="Главная страница" width="50" height="50"></a>
+       <a class="navbar-brand" href="/"><img src="{{ url_for('static', filename='img/home.png') }}" alt="Главная страница" width="50" height="50"></a>
         {% if current_user.is_authenticated %}
         <h>{{ current_user.name }}</h>
         <a class="btn btn-success" href="/logout">Выход</a>

@@ -17,7 +17,9 @@
                 <h2>
                   {{questions.content}}
                 </h2><br/>
-                <p class="text-sm"><span class="op-6">дата отправки - </span>{{questions.created_date}}<br/><span class="op-6">Задал вопрос - </span>{{questions.user.name}}</p><br/>
+                <p class="text-sm"><span class="op-6">дата отправки - </span>{{questions.created_date}}<br/><span class="op-6">Задал вопрос - </span>
+                    <a class="text-black" href="/other_profile/{{questions.user.id}}">{{questions.user.name}}</a></p><br/>
+
 
                 <div class="text-sm op-5"> 
                 {% if current_user.is_authenticated %}
@@ -44,7 +46,8 @@
                 <h2>
                   {{i.content}}
                 </h2>
-                <p class="text-sm"><span class="op-6">дата отправки - </span>{{i.created_date}}<br/><span class="op-6">Написал ответ - </span>{{i.user.name}}</p><br/>
+                <p class="text-sm"><span class="op-6">дата отправки - </span>{{i.created_date}}<br/><span class="op-6">Написал ответ - </span>
+                    <a class="text-black" href="/other_profile/{{i.user.id}}">{{i.user.name}}</a></p><br/>
 
               </div>
             </div>
