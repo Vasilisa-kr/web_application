@@ -147,6 +147,20 @@ def profile():
         return redirect('/login')
 
 
+@app.route('/other_profile/<int:num>')
+def other_profile(num):
+    if current_user.is_authenticated:
+        if num == current_user.id:
+            return redirect('/profile')
+        else:
+            db_sess = db_session.create_session()
+            user = db_sess.query(User).filter(User.id == num).first()
+            answers = len(user.answers)
+            return render_template("other_profile.html", answers=answers, user=user)
+    else:
+        return redirect('/login')
+
+
 @app.route('/solutions/<int:num>')
 def solutions(num):
     db_sess = db_session.create_session()
