@@ -23,6 +23,7 @@ class QuestionsForm(FlaskForm):
     title = StringField('Заголовок', validators=[DataRequired()])
     content = TextAreaField("Содержание")
     is_private = BooleanField("Личное")
+    question_type = SelectField('Тема вопроса')
     submit = SubmitField('Отправить')
 
 
