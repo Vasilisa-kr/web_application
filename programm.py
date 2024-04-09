@@ -79,6 +79,7 @@ def add_questions():
         questions.title = form.title.data
         questions.content = form.content.data
         questions.is_private = form.is_private.data
+        questions.type = form.question_type.data
         current_user.questions.append(questions)
         db_sess.merge(current_user)
         db_sess.commit()
