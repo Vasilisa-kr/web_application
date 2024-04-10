@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField, TextAreaField, SubmitField, EmailField, BooleanField, SelectField
 from wtforms.validators import DataRequired
+from data.types import QuestionType
 
 
 class LoginForm(FlaskForm):
@@ -23,7 +24,7 @@ class QuestionsForm(FlaskForm):
     title = StringField('Заголовок', validators=[DataRequired()])
     content = TextAreaField("Содержание")
     is_private = BooleanField("Личное")
-    question_type = SelectField('Тема вопроса', choices=[('1', '2')])
+    question_type = SelectField('Тема вопроса', choices=QuestionType.types_list.items())
     submit = SubmitField('Отправить')
 
 

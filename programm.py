@@ -5,6 +5,8 @@ from data.questions import Questions
 from data.users import User
 from data.answer import Answers
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from data.types import QuestionType
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -26,6 +28,8 @@ def index():
             (Questions.user == current_user) | (Questions.is_private != True))
     else:
         questions = db_sess.query(Questions).filter(Questions.is_private != True)
+    for q in questions:
+        print(q.type_name)
     return render_template("index.html", questions=questions)
 
 
@@ -79,7 +83,7 @@ def add_questions():
         questions.title = form.title.data
         questions.content = form.content.data
         questions.is_private = form.is_private.data
-        questions.type = form.question_type.data
+        questions.type_id = form.question_type.data
         current_user.questions.append(questions)
         db_sess.merge(current_user)
         db_sess.commit()
