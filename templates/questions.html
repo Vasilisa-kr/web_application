@@ -13,6 +13,15 @@
 <form action="" method="post">
     {{ form.hidden_tag() }}
     <p>
+        {{ form.question_type.label }}<br>
+        {{ form.question_type(class="form-control") }}<br>
+        {% for error in form.question_type.errors %}
+            <p content="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>
         {{ form.title.label }}<br>
         {{ form.title(class="form-control") }}<br>
         {% for error in form.title.errors %}
@@ -30,6 +39,7 @@
             </p>
         {% endfor %}
     </p>
+
     <p>{{ form.is_private() }} {{ form.is_private.label }}</p>
     <p>{{ form.submit(type="submit", class="btn btn-lg btn-block btn-success rounded-0 py-4 mb-3 bg-op-6 roboto-bold") }}</p>
     {{message}}
