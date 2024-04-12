@@ -16,6 +16,10 @@
 <header>
     <nav class="navbar navbar-light bg-light">
        <a class="navbar-brand" href="/"><img src="{{ url_for('static', filename='img/home.png') }}" alt="Главная страница" width="50" height="50"></a>
+        <form action="{{url_for('search')}}" method="post" class="d-flex"></form>
+            {{ form.hidden_tag()}}
+            <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Search" name="searched">
+            <a class="btn btn-outline-secondary" type="submit" href="/search">Искать</a>
         {% if current_user.is_authenticated %}
         <h>{{ current_user.name }}</h>
         <a class="btn btn-success" href="/logout">Выход</a>

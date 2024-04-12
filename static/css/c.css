@@ -1,5 +1,4 @@
 body{
-    margin-top:20px;
     background:#eee;
     color: #708090;
 }
@@ -23,3 +22,17 @@ a{
 font: 20px Stem-Regular,arial, sans-serif;}
 
 body {background-color: #90EE90;}
+
+.navbar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+
+  %container-flex-properties {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+

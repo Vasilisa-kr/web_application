@@ -20,6 +20,11 @@ class RegisterForm(FlaskForm):
     submit = SubmitField('Войти')
 
 
+class SearchForm(FlaskForm):
+    searched = EmailField('Searched', validators=[DataRequired()])
+    submit = SubmitField('Поиск')
+
+
 class QuestionsForm(FlaskForm):
     title = StringField('Заголовок', validators=[DataRequired()])
     content = TextAreaField("Содержание")
