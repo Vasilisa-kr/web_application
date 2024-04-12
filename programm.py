@@ -1,5 +1,5 @@
 from flask import Flask, url_for, redirect, render_template, request, abort
-from forms.form import LoginForm, RegisterForm, QuestionsForm, AnswersForm
+from forms.form import LoginForm, RegisterForm, QuestionsForm, AnswersForm, SearchForm
 from data import db_session
 from data.questions import Questions
 from data.users import User
@@ -28,9 +28,20 @@ def index():
             (Questions.user == current_user) | (Questions.is_private != True))
     else:
         questions = db_sess.query(Questions).filter(Questions.is_private != True)
-    for q in questions:
-        print(q.type_name)
     return render_template("index.html", questions=questions)
+
+@app.route('/search', methods=["POST"])
+def search():
+    form = SearchForm()
+    if form.validate_on_submit():
+        post.search = form.searched.data
+        return render_template("search.html", form=form, searched=post.search)
+
+
+@app.context_processor
+def base():
+    form = SearchForm()
+    return dict(form=form)
 
 
 @app.route('/register', methods=['GET', 'POST'])
