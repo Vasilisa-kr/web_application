@@ -30,12 +30,12 @@ def index():
         questions = db_sess.query(Questions).filter(Questions.is_private != True)
     return render_template("index.html", questions=questions)
 
-@app.route('/search', methods=["POST"])
+@app.route('/search', methods=['POST'])
 def search():
     form = SearchForm()
-    if form.validate_on_submit():
-        post.search = form.searched.data
-        return render_template("search.html", form=form, searched=post.search)
+    search = form.searched.data
+
+    return render_template("search.html", form=form, searched=search)
 
 
 @app.context_processor
