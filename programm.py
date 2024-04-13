@@ -19,7 +19,7 @@ def load_user(user_id):
     db_sess = db_session.create_session()
     return db_sess.query(User).get(user_id)
 
-
+# главная страница
 @app.route('/')
 def index():
     db_sess = db_session.create_session()
@@ -30,7 +30,7 @@ def index():
         questions = db_sess.query(Questions).filter(Questions.is_private != True)
     return render_template("index.html", questions=questions)
 
-
+# поиск вопросов
 @app.route('/search', methods=['POST'])
 def search():
     form = SearchForm()
@@ -47,7 +47,7 @@ def base():
     form = SearchForm()
     return dict(form=form)
 
-
+# регистрация
 @app.route('/register', methods=['GET', 'POST'])
 def reqister():
     form = RegisterForm()
@@ -72,7 +72,7 @@ def reqister():
         return redirect('/login')
     return render_template('register.html', form=form)
 
-
+# вход в аккаунт
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -87,7 +87,7 @@ def login():
                                form=form)
     return render_template('login.html', form=form)
 
-
+# задать вопрос
 @app.route('/questions', methods=['GET', 'POST'])
 @login_required
 def add_questions():
@@ -106,7 +106,7 @@ def add_questions():
     return render_template('questions.html',
                            form=form)
 
-
+# просмотр вопроса
 @app.route('/questions/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit_news(id):
@@ -139,7 +139,7 @@ def edit_news(id):
                            form=form
                            )
 
-
+# добавить ответ
 @app.route('/add_answer/<int:num>', methods=['GET', 'POST'])
 @login_required
 def add_answer(num):
@@ -157,7 +157,7 @@ def add_answer(num):
     return render_template('answers.html',
                            form=form)
 
-
+# просмотр профиля
 @app.route('/profile')
 def profile():
     if current_user.is_authenticated:
@@ -166,7 +166,7 @@ def profile():
     else:
         return redirect('/login')
 
-
+# просмотр чужового профиля
 @app.route('/other_profile/<int:num>')
 def other_profile(num):
     if current_user.is_authenticated:
@@ -180,14 +180,14 @@ def other_profile(num):
     else:
         return redirect('/login')
 
-
+# ответы
 @app.route('/solutions/<int:num>')
 def solutions(num):
     db_sess = db_session.create_session()
     questions = db_sess.query(Questions).filter(Questions.id == num).first()
     return render_template("solutions.html", questions=questions)
 
-
+# выйти из аккаунта
 @app.route('/logout')
 @login_required
 def logout():
