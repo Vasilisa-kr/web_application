@@ -35,4 +35,17 @@ body {background-color: #90EE90;}
     align-items: center;
     justify-content: space-between;
   }
+}
+nav{
+  input{
+    margin-right: 2em;
+    margin-left: 2em;
+  }
 
+  p{
+    margin-right: 2em;
+    margin-left: 2em;
+    margin-top: 0;
+    margin-bottom:0;
+  }
+}

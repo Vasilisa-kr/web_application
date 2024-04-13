@@ -21,7 +21,7 @@ class RegisterForm(FlaskForm):
 
 
 class SearchForm(FlaskForm):
-    searched = EmailField('Searched', validators=[DataRequired()])
+    searched = StringField('Searched', validators=[DataRequired()])
     submit = SubmitField('Поиск')
 
 
