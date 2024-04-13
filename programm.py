@@ -30,12 +30,16 @@ def index():
         questions = db_sess.query(Questions).filter(Questions.is_private != True)
     return render_template("index.html", questions=questions)
 
+
 @app.route('/search', methods=['POST'])
 def search():
     form = SearchForm()
+    db_sess = db_session.create_session()
     search = form.searched.data
-
-    return render_template("search.html", form=form, searched=search)
+    posts = db_sess.query(Questions).filter(Questions.content.like('%' + search + '%') |
+                                            Questions.title.like('%' + search + '%'))
+    #posts = db_sess.query(Questions).order_by(Questions.created_date)
+    return render_template("search.html", form=form, searched=posts)
 
 
 @app.context_processor
