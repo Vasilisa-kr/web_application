@@ -18,6 +18,7 @@ def load_user(user_id):
     return db_sess.query(User).get(user_id)
 
 
+# Главная страница
 @app.route('/')
 def index():
     db_sess = db_session.create_session()
@@ -29,6 +30,7 @@ def index():
     return render_template("index.html", questions=questions)
 
 
+# Страница регистрации
 @app.route('/register', methods=['GET', 'POST'])
 def reqister():
     form = RegisterForm()
@@ -54,6 +56,7 @@ def reqister():
     return render_template('register.html', form=form)
 
 
+# Страница входа по почте и паролю
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -69,6 +72,7 @@ def login():
     return render_template('login.html', form=form)
 
 
+# Задать вопрос
 @app.route('/questions', methods=['GET', 'POST'])
 @login_required
 def add_questions():
@@ -87,39 +91,7 @@ def add_questions():
                            form=form)
 
 
-@app.route('/questions/<int:id>', methods=['GET', 'POST'])
-@login_required
-def edit_news(id):
-    form = QuestionsForm()
-    if request.method == "GET":
-        db_sess = db_session.create_session()
-        questions = db_sess.query(Questions).filter(Questions.id == id,
-                                                    Questions.user == current_user
-                                                    ).first()
-        if questions:
-            form.title.data = questions.title
-            form.content.data = questions.content
-            form.is_private.data = questions.is_private
-        else:
-            abort(404)
-    if form.validate_on_submit():
-        db_sess = db_session.create_session()
-        questions = db_sess.query(Questions).filter(Questions.id == id,
-                                                    Questions.user == current_user
-                                                    ).first()
-        if questions:
-            questions.title = form.title.data
-            questions.content = form.content.data
-            questions.is_private = form.is_private.data
-            db_sess.commit()
-            return redirect('/')
-        else:
-            abort(404)
-    return render_template('questions.html',
-                           form=form
-                           )
-
-
+#Добавить вопрос
 @app.route('/add_answer/<int:num>', methods=['GET', 'POST'])
 @login_required
 def add_answer(num):
@@ -138,6 +110,7 @@ def add_answer(num):
                            form=form)
 
 
+#Страница профиля пользователя
 @app.route('/profile')
 def profile():
     if current_user.is_authenticated:
@@ -147,6 +120,7 @@ def profile():
         return redirect('/login')
 
 
+#Посмотреть чужой профиль
 @app.route('/other_profile/<int:num>')
 def other_profile(num):
     if current_user.is_authenticated:
@@ -161,6 +135,7 @@ def other_profile(num):
         return redirect('/login')
 
 
+#Посмотреть вопрос и решения к нему
 @app.route('/solutions/<int:num>')
 def solutions(num):
     db_sess = db_session.create_session()
