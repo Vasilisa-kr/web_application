@@ -7,7 +7,6 @@ from data.answer import Answers
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from data.types import QuestionType
 
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 login_manager = LoginManager()
@@ -19,7 +18,8 @@ def load_user(user_id):
     db_sess = db_session.create_session()
     return db_sess.query(User).get(user_id)
 
-# главная страница
+
+# Главная страница
 @app.route('/')
 def index():
     db_sess = db_session.create_session()
@@ -30,6 +30,7 @@ def index():
         questions = db_sess.query(Questions).filter(Questions.is_private != True)
     return render_template("index.html", questions=questions)
 
+
 # поиск вопросов
 @app.route('/search', methods=['POST'])
 def search():
@@ -38,7 +39,6 @@ def search():
     search = form.searched.data
     posts = db_sess.query(Questions).filter(Questions.content.like('%' + search + '%') |
                                             Questions.title.like('%' + search + '%'))
-    #posts = db_sess.query(Questions).order_by(Questions.created_date)
     return render_template("search.html", form=form, searched=posts)
 
 
@@ -47,7 +47,8 @@ def base():
     form = SearchForm()
     return dict(form=form)
 
-# регистрация
+
+# Страница регистрации
 @app.route('/register', methods=['GET', 'POST'])
 def reqister():
     form = RegisterForm()
@@ -72,7 +73,8 @@ def reqister():
         return redirect('/login')
     return render_template('register.html', form=form)
 
-# вход в аккаунт
+
+# Страница входа по почте и паролю
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -87,7 +89,8 @@ def login():
                                form=form)
     return render_template('login.html', form=form)
 
-# задать вопрос
+
+# Задать вопрос
 @app.route('/questions', methods=['GET', 'POST'])
 @login_required
 def add_questions():
@@ -106,7 +109,7 @@ def add_questions():
     return render_template('questions.html',
                            form=form)
 
-# просмотр вопроса
+
 @app.route('/questions/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit_news(id):
@@ -139,7 +142,8 @@ def edit_news(id):
                            form=form
                            )
 
-# добавить ответ
+
+# Добавить вопрос
 @app.route('/add_answer/<int:num>', methods=['GET', 'POST'])
 @login_required
 def add_answer(num):
@@ -157,7 +161,8 @@ def add_answer(num):
     return render_template('answers.html',
                            form=form)
 
-# просмотр профиля
+
+# Страница профиля пользователя
 @app.route('/profile')
 def profile():
     if current_user.is_authenticated:
@@ -166,7 +171,8 @@ def profile():
     else:
         return redirect('/login')
 
-# просмотр чужового профиля
+
+# Посмотреть чужой профиль
 @app.route('/other_profile/<int:num>')
 def other_profile(num):
     if current_user.is_authenticated:
@@ -180,14 +186,16 @@ def other_profile(num):
     else:
         return redirect('/login')
 
-# ответы
+
+# Посмотреть вопрос и решения к нему
 @app.route('/solutions/<int:num>')
 def solutions(num):
     db_sess = db_session.create_session()
     questions = db_sess.query(Questions).filter(Questions.id == num).first()
     return render_template("solutions.html", questions=questions)
 
-# выйти из аккаунта
+
+# Выход из аккаунта
 @app.route('/logout')
 @login_required
 def logout():
